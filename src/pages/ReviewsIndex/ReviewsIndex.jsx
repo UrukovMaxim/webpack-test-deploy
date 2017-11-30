@@ -1,6 +1,7 @@
 import React, {Component} from 'React';
-import Header from 'Header';
 import Footer from 'Footer';
+
+import './ReviewsIndex.scss';
 
 class ReviewsIndex extends Component {
 	constructor() {
@@ -11,8 +12,7 @@ class ReviewsIndex extends Component {
 		const {car} = this.props;
 
 		return (
-			<div styleName='ReviewsIndex'>
-				<Header/>
+			<div className='ReviewsIndex'>
 				Test widget from reviews index<br/>
 				{NODE_ENV}
 				{car}

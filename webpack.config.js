@@ -37,9 +37,40 @@ var extractSass = new ExtractTextPlugin({
 	allChunks: true
 });
 
+var uglifyPlugin = new UglifyJSPlugin({
+	sourceMap: true
+});
+
+var scssLoaders = [
+	{
+		loader: 'css',
+		options: {
+			sourceMap: true,
+			modules: true,
+			localIdentName: '[hash:base64:5]'
+		}
+	}, {
+		loader: 'resolve-url'
+	}, {
+		loader: 'sass',
+		options: {
+			sourceMap: true,
+			includePaths: [stylesFolderPath]
+		}
+	}, {
+		loader: 'postcss'
+	}
+];
+
+if (isDevelopment) {
+	scssLoaders.unshift({
+		loader: 'style'
+	});
+}
+
 if (isProduction) {
   webpackPlugins.push(
-  	new UglifyJSPlugin({sourceMap: true}),
+	  uglifyPlugin,
 	  extractSass
   );
 }
@@ -62,12 +93,12 @@ module.exports = {
 			use: [{loader: 'babel'}, {loader: 'cssModulesLoader'}]
     }, {
 			test: /\.scss$/,
-			use: isProduction ?
-				extractSass.extract({
-					use: ['css', 'resolve-url', 'sass', 'postcss']
-				}) :
-				['style', 'css', 'sass', 'postcss']
-    }],
+			use: isProduction ? extractSass.extract({use: scssLoaders}) : scssLoaders
+    }, {
+			test: /\.css?$/,
+			exclude: /node_modules/,
+			use: ['style', 'css']
+		}]
 	},
 	watch: isDevelopment,
 	devtool: isProduction ? 'source-map' : 'eval',
@@ -81,7 +112,7 @@ module.exports = {
 		},
 		extensions: ['*', '.jsx', '.js', '.scss'],
 		plugins: [new DirectoryNamedWebpackPlugin({exclude: /node_modules/})],
-    modules: [componentsFolderPath, pagesFolderPath, stylesFolderPath, 'node_modules']
+    modules: [componentsFolderPath, pagesFolderPath, 'node_modules']
 	},
 	resolveLoader: {
 		moduleExtensions: ['-loader'],

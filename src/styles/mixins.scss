@@ -6,3 +6,7 @@
     font-family: Roboto, arial, sans-serif;
   }
 }
+
+@mixin red() {
+  background-color: red;
+}
