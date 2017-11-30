@@ -1,12 +1,12 @@
 import React, {Component} from 'React';
 import ReactDOM from 'react-dom';
-import App from 'App';
+import ReviewsIndex from 'ReviewsIndex';
 
 console.log('app init');
 
 const rootNode = document.getElementById('app');
 
 ReactDOM.render(
-  <App/>,
+  <ReviewsIndex/>,
   rootNode
 );
