@@ -47,7 +47,7 @@ var scssLoaders = [
 		options: {
 			sourceMap: true,
 			modules: true,
-			localIdentName: isProduction ? '[hash:base64:5]' : '[name][hash:base64:5]'
+			localIdentName: isProduction ? '[hash:base64:5]' : '[name]_[hash:base64:5]'
 		}
 	}, {
 		loader: 'resolve-url'
@@ -89,7 +89,7 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.jsx?$/,
-      exclude: /node_modules/,
+			exclude: [/node_modules(\\|\/)((?!@ott)|(@ott.*(?=lib)))/],
 			use: [{loader: 'babel'}, {loader: 'cssModulesLoader'}]
     }, {
 			test: /\.scss$/,

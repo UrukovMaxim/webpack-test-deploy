@@ -1,0 +1,78 @@
+$tabletScreen: 960px;
+$mobileScreen: 480px;
+
+//todo hasBoth, hasLeft, hasRight показывают, захватывать ли отспупы слева и справа при расчете ширины. withoutMargin обнуляет margin принудительно
+$options: hasBoth, hasLeft, hasRight, withoutMargin;
+$devices: desktop, tablet, mobile;
+$gutterWidth: 16px, 16px, 12px;
+$gutterCount: 11, 7, 3;
+$columnsCount: 12, 8, 4;
+
+@function calculateBlockWidth($deviceType, $columnsCountParam, $optionsParam) {
+  $deviceIndex: index($devices, $deviceType);
+  $deviceGutterWidth: nth($gutterWidth, $deviceIndex);
+  $deviceGutterCount: nth($gutterCount, $deviceIndex);
+  $deviceColumnsCount: nth($columnsCount, $deviceIndex);
+  $deviceGutterCountForCalculate: $columnsCountParam - 1;
+
+  @if ($optionsParam == nth($options, 1)) {
+    $deviceGutterCountForCalculate: $columnsCountParam + 1;
+  }
+
+  @if ($optionsParam == nth($options, 2) or $optionsParam == nth($options, 3)) {
+    $deviceGutterCountForCalculate: $columnsCountParam;
+  }
+
+  @return calc((100% - #{$deviceGutterWidth} * #{$deviceGutterCount}) / #{$deviceColumnsCount} * #{$columnsCountParam} + #{$deviceGutterWidth} * #{$deviceGutterCountForCalculate});
+}
+
+@mixin calculateMargin($deviceType, $columnsCountParam: 0, $optionsParam: '') {
+  $deviceIndex: index($devices, $deviceType);
+  $deviceGutterWidth: nth($gutterWidth, $deviceIndex);
+  $deviceColumnsCount: nth($columnsCount, $deviceIndex);
+
+  &:not(:last-child) {
+    margin-right: $deviceGutterWidth;
+
+    @if ($optionsParam == nth($options, 4) or $deviceColumnsCount == $columnsCountParam) {
+      margin-right: 0;
+    }
+  }
+}
+
+@mixin gridUI($columnsCountParam: 0, $optionsParam: '') {
+  width: calculateBlockWidth(desktop, $columnsCountParam, $optionsParam);
+  @include calculateMargin(desktop, $columnsCountParam, $optionsParam);
+
+  @include max-screen($tabletScreen) {
+    width: calculateBlockWidth(tablet, $columnsCountParam, $optionsParam);
+    @include calculateMargin(tablet, $columnsCountParam, $optionsParam);
+  }
+
+  @include max-screen($mobileScreen) {
+    width: calculateBlockWidth(mobile, $columnsCountParam, $optionsParam);
+    @include calculateMargin(mobile, $columnsCountParam, $optionsParam);
+  }
+}
+
+@mixin gridBlock($deviceTypeParam: '', $columnsCountParam: 0, $optionsParam: '') {
+
+  @if ($deviceTypeParam == nth($devices, 1)) {
+    @include gridUI($columnsCountParam, $optionsParam);
+    @content;
+  }
+
+  @if ($deviceTypeParam == nth($devices, 2)) {
+    @include max-screen($tabletScreen) {
+      @include gridUI($columnsCountParam, $optionsParam);
+      @content;
+    }
+  }
+
+  @if ($deviceTypeParam == nth($devices, 3)) {
+    @include max-screen($mobileScreen) {
+      @include gridUI($columnsCountParam, $optionsParam);
+      @content;
+    }
+  }
+}

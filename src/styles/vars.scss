@@ -1,0 +1,68 @@
+$baseFontSize: 13px;
+$browserContext: $baseFontSize;
+
+$P: 8px;
+$Px2: $P * 2;
+$Px3: $P * 3;
+$Px4: $P * 4;
+$Px5: $P * 5;
+$Px6: $P * 6;
+$Px7: $P * 7;
+$Px8: $P * 8;
+
+$Pd2: $P / 2;
+
+$cellPadding: 1px;
+
+$winWidth: $P * 96;
+$wrapWidth: $P * 128;
+$contentWidth: $P * 82;
+//$headerWidth: $P * 122;
+$headerWidth: $wrapWidth;
+$controlsH: 5 * $P;
+$monthSideP: 1 * $P;
+
+
+/*----- header -----*/
+$headerHeightVal: 64px;
+$menuItemLineHeight: 1;
+$menuItemLetterSpacing: .4px;
+$menuItemBackgroundOnHover: rgba(white, 0.2);
+$menuItemPadding: $P $P 7px;
+
+$loginButtonHeight: 32px;
+$loginButtonWidth: 80px;
+/*----------------*/
+
+$inputHeight: 46px;
+$fatInputHeight: 56px;
+
+$inputDefaultColor: #283f51;
+$input-color--disabled: #D4D2D2;
+$global__controlErrorColor: #f44336;
+
+// TODO rename
+$rr-vas-toggleBtn-bg: #2f9c51;
+$rr-errorBGColor: #fddfdf;
+$rr-disabledColor: #9E9E9E;
+$rr-placeholderColor: #9c9c9c;
+
+$rr-defaultPlaceholderYPos: -110%;
+$rr-innerBGColor: white;
+$rr-cardInnerBGColor: #F5F5F5;
+
+$rr-inputDisabledInnerBGColor: $rr-cardInnerBGColor;
+
+$rr-innerHoverColor: #eee;
+$rr-errorColor: #FF6421;
+$rr-borderErrorColor: $rr-errorColor;
+$rr-cardInputPlaceholderYPos: -130%;
+$rr-cardInputColor: #424242;
+
+$color-Yellow: #FFD41E;
+$animationDuration: 200ms;
+$color-YellowLight: #FFE458;
+$color-YellowHover: #FFC901;
+$unit: 4px;
+
+@import "railways";

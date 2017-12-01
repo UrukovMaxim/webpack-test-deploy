@@ -1,0 +1,60 @@
+$cellBackgroundColor: #FFF;
+$cellBodyShadow: #DCE2F5;
+
+$titleColor: #39494F;
+$mainTextColor: #283F51;
+$themeStaticText: #717788;
+$packagesStatic: #6C7A89;
+
+$themeColor1: #009E85;
+$themeColor2: #FB9B00;
+$themeColor3: #9D60B7;
+$themeColor4: #009ADD;
+$themeColor5: #283F51;
+$themeColor6: #234684;
+$themeColor7: #8bc34a;
+$themeColor8: #EF4836;
+
+$themeColor1Inverse: #FFF;
+$themeOldVersionBg: #ededed;
+
+$packColor1: #5DA500;
+$packColor1WithAlpha: rgba($packColor1, 0.5);
+
+$rzdThemeColor: #E74C3C;
+
+$hotelsColor1: #8F4EAE;
+$hotelsColor2: #fbe4fa;
+
+$carsThemeColor: #F9AA0C;
+$activeColor: #009ADD;
+
+
+/* New design colors */
+$color-OTTBlack: #3A3A3A;
+$color-BGColor: #F7F7F7;
+
+$color-G1: #F5F5F5;
+$color-G2: #EEE;
+$color-G3: #E0E0E0;
+$color-G4: #D4D2D2;
+$color-G5: #9E9E9E;
+$color-G6: #616161;
+$color-G7: #424242;
+$color-G8: #212121;
+
+$color-Blue: #01ABFB;
+$color-BlueHover: #019DEC;
+$color-Yellow: #FFE470;
+$color-Yellow2: #FFD41E;
+$color-YellowHover: #FFC901;
+$color-Red: #FF6B00;
+$color-Red2: #FFC9A2;
+$color-Green: #4FBB04;
+
+@mixin color-links {
+  color: $color-Blue;
+  @include hover {
+    color: $color-BlueHover;
+  }
+}

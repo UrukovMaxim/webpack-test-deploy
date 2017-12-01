@@ -1,0 +1,71 @@
+$screen-wide: 1392px;
+$screen-narrow: 1280px;
+$screen-tablet: 960px;
+$screen-phone: 460px;
+
+$margin-wide: 40px;
+$margin-narrow: 24px;
+$margin-tablet: 8px;
+$margin-phone: 8px;
+
+$padding-wide: 88px;
+$padding-narrow: 72px;
+$padding-tablet: 0;
+$padding-phone: 0;
+
+$max-width: $screen-wide - $margin-wide * 2;
+
+$padding-logo: 80px;
+
+@mixin screen-desktop {
+  @media screen and (min-width: $screen-tablet) { @content; }
+}
+@mixin screen-unlimited {
+  @media screen and (min-width: ($screen-wide + 1)) { @content; }
+}
+@mixin screen-wide {
+  @media screen and (min-width: $screen-narrow) and (max-width: $screen-wide) { @content; }
+}
+@mixin screen-narrow {
+  @media screen and (min-width: $screen-tablet) and (max-width: ($screen-narrow - 1)) { @content; }
+}
+@mixin screen-mobile {
+  @media screen and (max-width: ($screen-tablet - 1)) { @content; }
+}
+@mixin screen-tablet {
+  @media screen and (min-width: ($screen-phone + 1)) and (max-width: ($screen-tablet - 1)) { @content; }
+}
+@mixin screen-phone {
+  @media screen and (max-width: $screen-phone) { @content; }
+}
+
+@mixin spreader {
+  max-width: $max-width;
+  position: relative;
+  box-sizing: border-box;
+  margin: auto;
+
+  @include screen-wide {
+    margin: 0 $margin-wide;
+  }
+  @include screen-narrow {
+    margin: 0 $margin-narrow;
+  }
+  @include screen-tablet {
+    margin: 0 $margin-tablet;
+  }
+  @include screen-phone {
+    margin: 0 $margin-phone;
+  }
+}
+
+@mixin content-mobile-wide {
+  @include screen-tablet {
+    margin-left: -$margin-tablet;
+    margin-right: -$margin-tablet;
+  }
+  @include screen-phone {
+    margin-left: -$margin-phone;
+    margin-right: -$margin-phone
+  }
+}

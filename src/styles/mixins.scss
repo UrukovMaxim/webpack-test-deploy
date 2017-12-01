@@ -1,4 +1,354 @@
+@import "colors";
+@import "vars";
+@import "functions";
+@import "grid";
+@import "spreaderMixin";
+@import "gridUI.scss";
 
+%clearfix {
+  &:after,
+  &:before {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+
+%inlineBlock {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin box-shadow($shadows...) {
+  -webkit-box-shadow: $shadows;
+  -moz-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+
+@mixin block {
+  margin-top: $P;
+}
+
+@mixin tileBox($mul: 1) {
+  box-sizing: border-box;
+  padding: $cellPadding * $mul;
+  background-clip: content-box;
+}
+
+@mixin tile($width, $height, $mul: 1) {
+  width: $width - 2 * $mul * $cellPadding;
+  height: $height - 2 * $mul * $cellPadding;
+  margin: $cellPadding * $mul;
+}
+
+@mixin BetterHelvetica {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+}
+
+@mixin clearPadding {
+  padding: 0;
+}
+
+@mixin clearMargin {
+  margin: 0;
+}
+
+@mixin vCenterAbs {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@mixin middle-align($box-model: inline-block) {
+  display: $box-model;
+  vertical-align: middle;
+}
+
+@mixin some($decoration) {
+  color: red;
+  text-decoration: $decoration;
+}
+
+@mixin content($w: $winWidth) {
+  width: $w;
+  margin: 0 auto;
+}
+
+@mixin font($fontSize:13px, $lineHeight:16px) {
+  font: normal #{$fontSize}/#{$lineHeight} arial, sans-serif;
+}
+
+@mixin fontFamily() {
+  font-family: arial, sans-serif;
+}
+
+@mixin _select($type) {
+  -webkit-touch-callout: $type;
+  -webkit-user-select: $type;
+  -moz-user-select: $type;
+  -ms-user-select: $type;
+  user-select: $type;
+}
+
+@mixin noselect() {
+  @include _select(none);
+}
+
+@mixin allow-select() {
+  @include _select('initial');
+}
+
+@mixin dlig() {
+  -webkit-font-feature-settings: "dlig";
+  -moz-font-feature-settings: "dlig=1";
+  -moz-font-feature-settings: "dlig";
+  -moz-font-feature-settings: "dlig" 1;
+  font-feature-settings: "dlig";
+  text-rendering: optimizeLegibility;
+}
+
+@mixin ruble() {
+  font-family: "numbers", Arial, sans-serif;
+  font-weight: normal;
+  text-transform: none;
+  @include dlig();
+}
+
+@mixin rubleBold() {
+  font-family: "numbers", Arial, sans-serif;
+  font-weight: bold;
+  @include dlig();
+}
+
+@mixin rubleItalic() {
+  font-family: "numbers", Arial, sans-serif;
+  font-style: italic;
+  @include dlig();
+}
+
+@mixin popUpShadow() {
+  @include box-shadow(0 8px 20px -6px rgba(black, .2), 0 1px 2px rgba(black, .1), 0 0 1px rgba(black, .1));
+}
+
+@mixin blockShadow() {
+  @include box-shadow(0 1px 1px rgba(black, 0.15))
+}
+
+@mixin pseudoLink() {
+  cursor: pointer;
+  color: $themeColor4;
+  border-bottom: 1px dotted rgba($themeColor4, .3);
+}
+
+@mixin box-sizing($boxModel: border-box) {
+  -webkit-box-sizing: $boxModel;
+  -moz-box-sizing: $boxModel;
+  box-sizing: $boxModel;
+}
+
+@mixin border-radius($rad) {
+  -webkit-border-radius: $rad;
+  -moz-border-radius: $rad;
+  border-radius: $rad;
+}
+
+@mixin border-bottom-radius($rad){
+  border-bottom-right-radius: $rad;
+  border-bottom-left-radius: $rad;
+}
+
+@mixin border-top-radius($radius) {
+  -webkit-border-top-right-radius: $radius;
+  border-top-right-radius: $radius;
+  -webkit-border-top-left-radius: $radius;
+  border-top-left-radius: $radius;
+  background-clip: padding-box;
+}
+
+@mixin border-right-radius($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+  -webkit-border-top-right-radius: $radius;
+  border-top-right-radius: $radius;
+  background-clip: padding-box;
+}
+
+@mixin border-bottom-radius($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+  -webkit-border-bottom-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+  background-clip: padding-box;
+}
+
+@mixin border-left-radius($radius) {
+  -webkit-border-bottom-left-radius: $radius;
+  border-bottom-left-radius: $radius;
+  -webkit-border-top-left-radius: $radius;
+  border-top-left-radius: $radius;
+  background-clip: padding-box;
+}
+
+@mixin overflowGradient($deg: 270deg, $colorLeft: #fff, $colorRight: rgba(255, 255, 255, 0)) {
+
+  &:after {
+    width: 35px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-image: linear-gradient($deg, $colorLeft 30%, $colorRight 100%);
+    content: "";
+  }
+}
+
+@mixin border($top: none, $right: none, $bottom: none, $left: none) {
+  border-top: $top;
+  border-right: $right;
+  border-bottom: $bottom;
+  border-left: $left;
+}
+
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+@mixin translate($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+@mixin skew($x, $y) {
+  @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+@mixin transform-origin($origin) {
+  moz-transform-origin: $origin;
+  -o-transform-origin: $origin;
+  -ms-transform-origin: $origin;
+  -webkit-transform-origin: $origin;
+  transform-origin: $origin;
+}
+
+@mixin transition($props...) {
+  -webkit-transition: $props;
+  -moz-transition: $props;
+  -ms-transition: $props;
+  -o-transition: $props;
+  transition: $props;
+}
+
+@mixin transform($props...) {
+  -webkit-transform: $props;
+  -moz-transform: $props;
+  -ms-transform: $props;
+  -o-transform: $props;
+  transform: $props;
+}
+
+@mixin transform-origin($x: 0, $y: 0) {
+  -webkit-transform-origin: $x $y;
+  -moz-transform-origin: $x $y;
+  -ms-transform-origin: $x $y;
+  -o-transform-origin: $x $y;
+  transform-origin: $x $y;
+}
+
+@mixin backfaceVisibility($prop) {
+  -webkit-backface-visibility: $prop;
+  -moz-backface-visibility: $prop;
+  -ms-backface-visibility: $prop;
+  backface-visibility: $prop;
+}
+
+@mixin size($width, $height: 'auto') {
+  @if $height == 'auto'{
+    height: $width;
+  } @else {
+    height: $height;
+  }
+  width: $width;
+}
+
+@mixin absolute($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin min-screen($size) { // Mobile first rulezzz
+  @media only screen and (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin visiblePlaceholder($y, $scale: .9) {
+  //@include transition(transform 150ms);
+  @include transform(translateY($y) scale($scale));
+}
+
+@mixin max-screen($size) {
+  @media only screen and (max-width: $size) {
+    @content;
+  }
+}
+
+@mixin rotateAnimation() {
+  @-webkit-keyframes rotatingfunction {
+    to {
+      -webkit-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg) translateZ(0);
+    }
+  }
+  @-moz-keyframes rotatingfunction {
+    to {
+      -moz-transform: rotate(360deg);
+      -moz-transform: rotate(360deg) translateZ(0);
+    }
+  }
+  @-ms-keyframes rotatingfunction {
+    to {
+      -ms-transform: rotate(360deg);
+      -ms-transform: rotate(360deg) translateZ(0);
+    }
+  }
+  @-o-keyframes rotatingfunction {
+    to {
+      -o-transform: rotate(360deg);
+      -o-transform: rotate(360deg) translateZ(0);
+    }
+  }
+  @keyframes rotatingfunction {
+    to {
+      transform: rotate(360deg);
+      transform: rotate(360deg) translateZ(0);
+    }
+  }
+}
+
+@mixin hover {
+  &:hover, &:focus, &:active, &--active {
+    @content;
+  }
+}
+
+/* New design type */
 @mixin font-Roboto($args: null) {
   @if $args {
     font: #{$args} Roboto, arial, sans-serif;
@@ -6,7 +356,152 @@
     font-family: Roboto, arial, sans-serif;
   }
 }
+@mixin type-Caption {
+  font-size: 12px;
+}
+@mixin type-Body {
+  font-size: 13px;
+}
+@mixin type-BodyB {
+  font-size: 13px;
+  font-weight: 500;
+}
+@mixin type-Navigation {
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+@mixin type-Basic {
+  font-size: 14px;
+}
+@mixin type-BasicB {
+  font-size: 14px;
+  font-weight: 500;
+}
+@mixin type-Subheading {
+  font-size: 16px;
+}
+@mixin type-SubheadingB {
+  font-size: 12px;
+  font-weight: 500;
+}
+@mixin type-NumberMini {
+  font-size: 18px;
+  font-weight: 500;
+}
+@mixin type-Title {
+  font-size: 20px;
+  font-weight: 500;
+}
+@mixin type-Headline {
+  font-size: 21px;
+}
+@mixin type-Number {
+  font-size: 21px;
+}
+@mixin type-Infopanel {
+  font-size: 24px;
+  font-weight: 300;
+}
+@mixin type-Massive {
+  font-size: 24px;
+  font-weight: 500;
+}
+@mixin type-Common {
+  @include font-Roboto;
+  line-height: normal;
+  font-weight: normal;
+  @include type-Body;
+}
 
-@mixin red() {
-  background-color: red;
+@mixin overflowGradient($deg: 270deg, $colorLeft: #fff, $colorRight: rgba(255, 255, 255, 0)) {
+
+  &:after {
+    width: 35px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-image: linear-gradient($deg, $colorLeft 30%, $colorRight 100%);
+    content: "";
+  }
+}
+
+@mixin placeholder($color: $color-G5) {
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $color;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: $color;
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    color: $color;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $color;
+  }
+}
+
+@mixin font-Money() {
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 400;
+  @include dlig();
+}
+
+//hotels suppliers
+
+@mixin hotels-suppliers {
+
+  &--mr {
+
+    &_blue {
+      background: blue;
+    }
+
+    &_crimson {
+      background: #dc143c;
+    }
+
+    &_white {
+      background: orange;
+    }
+
+    &_green {
+      background: #1fd358;
+    }
+
+    &_cyan {
+      background: cyan;
+    }
+
+    &_red {
+      background: red;
+    }
+
+    &_pink {
+      background: pink;
+    }
+
+    &_emerald {
+      background: #006400;
+    }
+
+    &_cyanid {
+      background: darkcyan;
+    }
+
+    &_bro {
+      background: brown;
+    }
+
+    &_brobiz {
+      background: #d2691e;
+    }
+  }
+
+  &--miss {
+
+    &_marple {
+      background: black;
+    }
+  }
 }

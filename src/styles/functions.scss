@@ -1,0 +1,19 @@
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+@function getAlphaColor($color, $percent) {
+  @return mix(white, $color, 100% - $percent);
+}
+
+@function pxToEm($targetPX, $context: $browserContext) {
+  @if (unitless($targetPX)) {
+    $targetPX: $targetPX * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $targetPX / $context * 1em;
+}
