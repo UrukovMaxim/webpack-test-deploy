@@ -47,7 +47,7 @@ var scssLoaders = [
 		options: {
 			sourceMap: true,
 			modules: true,
-			localIdentName: '[hash:base64:5]'
+			localIdentName: isProduction ? '[hash:base64:5]' : '[name][hash:base64:5]'
 		}
 	}, {
 		loader: 'resolve-url'

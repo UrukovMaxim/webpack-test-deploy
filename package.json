@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "deps-ok && NODE_ENV=development webpack-dev-server",
+    "startWin": "deps-ok&&set NODE_ENV=development&&set START_WIN=true&&webpack-dev-server",
     "build": "deps-ok && NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

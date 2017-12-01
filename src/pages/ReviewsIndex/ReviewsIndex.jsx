@@ -12,7 +12,7 @@ class ReviewsIndex extends Component {
 		const {car} = this.props;
 
 		return (
-			<div className='ReviewsIndex'>
+			<div styleName='ReviewsIndex'>
 				Test widget from reviews index<br/>
 				{NODE_ENV}
 				{car}

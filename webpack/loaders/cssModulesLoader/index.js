@@ -3,7 +3,6 @@ var EXT_PAT = /\.scss/g;
 var STYLE_EXT = 'scss';
 var path = require('path');
 var chalk = require('chalk');
-var loaders = process.env.NODE_ENV === 'production' ? '' : '!style!css?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!sass!';
 
 module.exports = function(source) {
 	this.cacheable && this.cacheable();
@@ -22,7 +21,7 @@ module.exports = function(source) {
 				return source;
 			}
 
-			var requirePartString = "var CSSModules = require('utility/reactCssModules');\n var __styles = require('" + loaders + "./";
+			var requirePartString = "var CSSModules = require('utility/reactCssModules');\n var __styles = require('./";
 
 			source = requirePartString + styleFileName + "'); \n" + source;
 
