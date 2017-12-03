@@ -1,6 +1,6 @@
 import React, {Component} from 'React';
 import Footer from 'Footer';
-import Header from '@ott/header';
+// import Header from '@ott/header';
 
 class ReviewsIndex extends Component {
 	constructor() {
@@ -9,10 +9,11 @@ class ReviewsIndex extends Component {
 
 	render() {
 		const {car} = this.props;
-		
+
 		return (
 			<div styleName='ReviewsIndex'>
-				<Header/>
+				{/*<Header/>*/}
+				privet
 				Test widget from reviews index<br/>
 				{NODE_ENV}
 				{car}

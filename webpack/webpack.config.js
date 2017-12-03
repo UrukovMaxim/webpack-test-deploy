@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /* Environment and Options params */
 var NODE_ENV = process.env.NODE_ENV;
@@ -10,13 +11,14 @@ var isProduction = NODE_ENV === 'production';
 var isDevelopment = NODE_ENV === 'development';
 
 /* Path */
-var srcPath = path.resolve(__dirname, './src');
-var reactPath = path.resolve(__dirname, path.join('node_modules', 'react'));
-var reactDOMPath = path.resolve(__dirname, path.join('node_modules', 'react-dom'));
-var componentsFolderPath = path.resolve(__dirname, path.join('src', 'components'));
-var pagesFolderPath = path.resolve(__dirname, path.join('src', 'pages'));
-var stylesFolderPath = path.resolve(__dirname, path.join('src', 'styles'));
-var utilityFolderPath = path.resolve(__dirname, path.join('src', 'utility'));
+var rootPath = path.join(__dirname, '..');
+var srcPath = path.resolve(rootPath, './src');
+var reactPath = path.resolve(rootPath, path.join('node_modules', 'react'));
+var reactDOMPath = path.resolve(rootPath, path.join('node_modules', 'react-dom'));
+var componentsFolderPath = path.resolve(rootPath, path.join('src', 'components'));
+var pagesFolderPath = path.resolve(rootPath, path.join('src', 'pages'));
+var stylesFolderPath = path.resolve(rootPath, path.join('src', 'styles'));
+var utilityFolderPath = path.resolve(rootPath, path.join('src', 'utility'));
 
 var webpackPlugins = [];
 webpackPlugins.push(
@@ -28,7 +30,11 @@ webpackPlugins.push(
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     minChunks: 2
-  })
+  }),
+	new HtmlWebpackPlugin({
+		template: path.resolve(rootPath, './src/index.html'),
+		filename: 'ru.html'
+	})
 );
 
 var extractSass = new ExtractTextPlugin({
@@ -79,10 +85,11 @@ module.exports = {
 	context: srcPath,
 	entry: {
     'hotelsMapWidget': './HotelsMapWidget',
-    'vendor': ['babel-polyfill', 'react', 'react-dom', './client']
+    'vendor': ['babel-polyfill', 'react', 'react-dom', './client.js']
 	},
 	output: {
-		path: path.resolve(__dirname, 'bundle'),
+		path: path.resolve(rootPath, 'bundle'),
+		publicPath: '/',
 		filename: isProduction ? '[name]-[chunkhash].js' : '[name].js',
     library: '[name]'
 	},
@@ -100,7 +107,6 @@ module.exports = {
 			use: ['style', 'css']
 		}]
 	},
-	watch: isDevelopment,
 	devtool: isProduction ? 'source-map' : 'eval',
 	plugins: webpackPlugins,
 	resolve: {
@@ -116,11 +122,6 @@ module.exports = {
 	},
 	resolveLoader: {
 		moduleExtensions: ['-loader'],
-		modules: ['node_modules', path.resolve(__dirname, './webpack/loaders') ]
-	},
-	devServer: {
-		contentBase: path.resolve(__dirname, 'bundle'),
-		compress: true,
-		port: 9000
+		modules: ['node_modules', path.resolve(rootPath, './webpack/loaders') ]
 	}
 };
